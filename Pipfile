@@ -5,11 +5,11 @@ name = "pypi"
 
 [packages]
 flask = "*"
-pandas = "*"
-heroku3 = "*"
 gunicorn = "*"
+pandas = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.9"
