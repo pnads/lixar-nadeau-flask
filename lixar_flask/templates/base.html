@@ -12,7 +12,10 @@
   </head>
   <body>
     <!--Our view content here-->
-    {% block content %}{% endblock content %}
+    {% include 'navbar.html' %}
+    <div class='container mt-4'>
+      {% block content %} {% endblock content %}
+   </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
