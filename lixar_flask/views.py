@@ -7,8 +7,8 @@ def home_view():
 
 @app.route("/download/")
 def download_view():
-    return "<h1>Download</h1>"
+    return render_template('download.html')
 
 @app.route("/dashboard/")
 def dashboard_view():
-    return "<h1>Dashboard</h1>"
+    return render_template('dashboard.html')
