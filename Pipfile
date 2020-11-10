@@ -7,9 +7,13 @@ name = "pypi"
 flask = "*"
 gunicorn = "*"
 pandas = "*"
+requests = "*"
+py7zr = "*"
 
 [dev-packages]
 pylint = "*"
+jupyter = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.9"
