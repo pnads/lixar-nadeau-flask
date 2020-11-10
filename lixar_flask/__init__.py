@@ -2,4 +2,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from .views import *
+from .home.views import *
+from .download.views import *
+from .dashboard.views import *
