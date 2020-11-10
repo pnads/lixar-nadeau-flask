@@ -4,9 +4,11 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block content %}
-
-
-<h1>Dashboard</h1>
-<p>Here is some text.</p>
-{{ table|safe }}
+<div class='container'>
+    <h1>Sales Data</h1>
+    {% for table in tables %}
+      <h2>{{titles[loop.index]}}</h2>
+      {{ table|safe }}
+    {% endfor %}
+</div>
 {% endblock content %}

@@ -26,7 +26,12 @@ print(df.head())
 
 print(df.columns.tolist())
 
-g = df.groupby('Region')['Total Profit'].sum()
-g_df = pd.DataFrame(g)
-g_df_html = g_df.to_html()
+# Make a summary table by doing a groupby on the region and including some Total columns
+g_total = df.groupby('Region')[['Total Revenue', 'Total Cost', 'Total Profit']].sum()
+df_total = pd.DataFrame(g_total)
+df_total = df_total[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.2f}".format((x)))
+table_total = df_total.to_html(justify='center', classes=["table", "table-striped", "table-hover"], header=True)
+table_total = table_total.replace('<thead>', '<thead class="thead-dark">')
 
+tables = [table_total]
+titles = ['na', 'Total']
