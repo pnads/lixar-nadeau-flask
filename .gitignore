@@ -1,6 +1,8 @@
 .DS_Store
 *.7z
 *.csv
+*.code-workspace
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
