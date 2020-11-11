@@ -5,7 +5,7 @@ import threading
 
 import pandas as pd
 
-from flask import render_template
+from flask import render_template, request
 
 from lixar_flask import app
 
@@ -16,12 +16,15 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.abspath(os.path.join(CURRENT_DIR, '..', 'data'))
 ZIP_FILE_PATH = os.path.join(DATA_DIR, '1500000 Sales Records.7z')
 
-
-
-@app.route("/download/")
+@app.route("/download/", methods=['POST'])
 def download():
-    print('Starting download and summarize process...')
-    threading.Thread(target=download_and_summarize).start()
+    download_and_summarize()
+    return render_template("download.html")
+
+@app.route("/download/", methods=['GET'])
+def download_view():
+    # print('Starting download and summarize process...')
+    # threading.Thread(target=download_and_summarize).start()
     return render_template('download.html')
 
 def download_and_summarize():
