@@ -1,7 +1,16 @@
 # lixar-nadeau-flask
 Hands-on challenge for Python Developer job at Lixar
 
-TODO
-- Pre-build dashboard when flask server turned on
-- Make the dashboard the only page
-- Have buttons to download/regenerate dashboard
+## Installation
+
+`git clone https://github.com/pnads/lixar-nadeau-flask.git`
+
+`cd lixar-nadeau-flask`
+
+`pipenv install`
+
+## Run App
+
+`pipenv shell`
+
+`python3 wsgi.py`
