@@ -1,6 +1,8 @@
 import os, sys, io
 import requests
 import py7zr
+import threading
+
 import pandas as pd
 
 from flask import render_template
@@ -18,6 +20,16 @@ ZIP_FILE_PATH = os.path.join(DATA_DIR, '1500000 Sales Records.7z')
 
 @app.route("/download/")
 def download():
+    print('Starting download and summarize process...')
+    threading.Thread(target=download_and_summarize).start()
+    return render_template('download.html')
+
+def download_and_summarize():
+    """
+    Background process to download the .7z file, extract large .csv and create
+    smaller .csv files for the dashboard tables.
+    :return: None
+    """
     print('Downloading "1500000 Sales Records.7z"...')
     response = requests.get(URL, headers={"User-Agent": "XY"})
     with open(ZIP_FILE_PATH, 'wb') as zf:
@@ -32,11 +44,7 @@ def download():
     # Make a summary table by doing a groupby on the region and including some Total columns
     g_total = df.groupby('Region')[['Total Revenue', 'Total Cost', 'Total Profit']].sum()
     df_total = pd.DataFrame(g_total)
-    df_total = df_total[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.2f}".format((x)))
-
     df_total.to_csv(os.path.join(DATA_DIR, 'region_totals.csv'))
     print('Done.')
 
-    return render_template('download.html')
-
-
+    return

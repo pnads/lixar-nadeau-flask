@@ -15,6 +15,8 @@ def dashboard():
     
     df_total = pd.read_csv(os.path.join(DATA_DIR, 'region_totals.csv'))
     df_total = df_total.set_index('Region')
+    df_total = df_total[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))
+
     table_total = df_total.to_html(justify='center', classes=["table", "table-striped", "table-hover"], header=True)
     table_total = table_total.replace('<thead>', '<thead class="thead-dark">')
 
@@ -22,4 +24,5 @@ def dashboard():
     titles = ['na', 'Total']
 
     return render_template('dashboard.html', tables=tables, titles=titles)
+
 
