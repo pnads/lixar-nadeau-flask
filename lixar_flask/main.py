@@ -123,7 +123,7 @@ def load_tables():
         table_country = error_message
        
     tables = [table_world, table_region, table_country]
-    titles = ['na', 'Worldwide', 'By Region', 'By Country'] # 'na' is skipped but necessary
+    titles = ['na', 'Worldwide', 'Region', 'Country | Top 30 by Total Profit'] # 'na' is skipped but necessary
 
     return tables, titles
 
@@ -156,8 +156,8 @@ def make_table_region(df_in):
     return
 
 def make_table_country(df_in):
-    """Performs a groupby on df_in by "Country". Generates an HTML table and
-    saves to file.
+    """Performs a groupby on df_in by "Country". Sorts by Total Profit and
+    takes the top 30. Generates an HTML table and saves to file.
 
     Args:
         df_in (dataframe): input sales data
@@ -170,6 +170,12 @@ def make_table_country(df_in):
         # tables have been updated
         df += np.random.rand(*df.shape) * 100.0
     
+    # Sort, rank, and keep top 30
+    df = df.sort_values('Total Profit', ascending=False).head(30).reset_index()
+    df['Rank'] = df.index.values + 1
+    df = df[['Rank', 'Country', 'Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']]
+    df = df.set_index(['Rank', 'Country'])
+
     # Format the table
     df[['Units Sold']] = df[['Units Sold']].applymap(lambda x: "{:,.0f}".format((x)))
     df[['Total Revenue', 'Total Cost', 'Total Profit']] = df[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))

@@ -59,16 +59,22 @@ with open(os.path.join(DATA_DIR, 'by_region.html'), 'w') as f:
 with open(os.path.join(DATA_DIR, 'by_region.html'), 'r') as f:
     table_region_read = f.read()
 
-# # Make a summary table by doing a groupby on the region and including some Total columns
-# g_country = df.groupby('Country')[['Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']].sum()
-# df_country = pd.DataFrame(g_country)
+# Make a summary table by doing a groupby on the region and including some Total columns
+g_country = df.groupby('Country')[['Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']].sum()
+df_country = pd.DataFrame(g_country)
 
-# df_country += np.random.rand(*df_country.shape) * 10.0
+df_country += np.random.rand(*df_country.shape) * 10.0
 
-# df_country[['Units Sold']] = df_country[['Units Sold']].applymap(lambda x: "{:,.0f}".format((x)))
-# df_country[['Total Revenue', 'Total Cost', 'Total Profit']] = df_country[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))
-# table_country = df_country.to_html(justify='center', classes=["table", "table-striped", "table-hover"], header=True)
-# table_country = table_country.replace('<thead>', '<thead class="thead-dark">')
+# top 20 countries by profit
+df_country_top = df_country.sort_values('Total Profit').head(30).reset_index()
+df_country_top['Rank'] = df_country_top.index.values + 1
+cols = ['Rank', 'Country', 'Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']
+df_country_top = df_country_top[cols]
+df_country_top = df_country_top.set_index(['Rank', 'Country'])
+df_country_top[['Units Sold']] = df_country_top[['Units Sold']].applymap(lambda x: "{:,.0f}".format((x)))
+df_country_top[['Total Revenue', 'Total Cost', 'Total Profit']] = df_country_top[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))
+table_country = df_country_top.to_html(justify='center', classes=["table", "table-striped", "table-hover"], header=True)
+table_country = table_country.replace('<thead>', '<thead class="thead-dark">')
 
 
 
