@@ -14,8 +14,8 @@
     {% for table in tables %}
         <div class='row'>
             <div id="tables" class="col">
-                <h3>{{titles[loop.index]}}</h3>
-                <div class="table-responsive-xl">
+                <h3 class='py-3'>{{titles[loop.index]}}</h3>
+                <div class="table-responsive-xl pb-3">
                     {{ table|safe }}
                 </div>
                 <hr>
