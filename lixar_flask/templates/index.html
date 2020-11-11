@@ -1,36 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %} Home {% endblock title %}
+{% block title %}Home{% endblock title %}
 
 {% block content %}
 
-<div class='container'></div>
-    <!-- <div class='row'>
-        <div class='col'>
-            <button id="dl-btn" class="btn btn-primary btn-lg btn-block">Download Data</button>
-        </div>
-    </div>
+<div class='container pt-5'>
     <div class='row'>
         <div class='col'>
-            <button id="pr-btn" class="btn btn-primary btn-lg btn-block">Process Data</button>
-        </div>
-    </div>
-    <div class='row'>
-        <div class='col'>
-            <button id="re-btn" class="btn btn-primary btn-lg btn-block">Refresh Tables</button>
-        </div>
-    </div> -->
-    <div class='row'>
-        <div id="tables" class='col'>
             <h1>Sales Data</h1>
-            {% for table in tables %}
-                <h2>{{titles[loop.index]}}</h2>
-                {{ table|safe }}
-            {% endfor %}
+            <hr>
         </div>
     </div>
-
-
-
-
+    {% for table in tables %}
+        <div class='row'>
+            <div id="tables" class="col">
+                <h3>{{titles[loop.index]}}</h3>
+                <div class="table-responsive-xl">
+                    {{ table|safe }}
+                </div>
+                <hr>
+            </div>
+        </div>
+    {% endfor %}  
+</div>
 {% endblock content %}
