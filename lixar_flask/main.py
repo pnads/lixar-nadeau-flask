@@ -37,6 +37,12 @@ def index():
 
 @app.route("/download")
 def download():
+    """Downloads the compressed data file from the remote server."""
+
+    if not os.path.exists(DATA_DIR):
+        print('Making directory "lixar_flask/data/"...')
+        os.makedirs(DATA_DIR)
+
     print('Downloading ' + DATA_URL + '...')
     try:
         response = requests.get(DATA_URL, headers={"User-Agent": "XY"}) # Arbitrary user-agent so download isn't blocked
