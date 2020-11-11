@@ -67,6 +67,24 @@
       $('#re-btn').click(function () {
           location.reload(true);
       })
+
+      //Clear Nav Link
+      $('#cl-btn').click(function () {
+          $.ajax({
+              type: "GET",
+              url: "/clear",
+              beforeSend: function () {
+                $('#cl-btn').text('Clearing Data...')
+              },
+              error: function () {
+                $('#cl-btn').text('Clear');
+                alert('ERROR: Could not delete data files.');
+              },
+              success: function () {
+                $('#cl-btn').text('Complete!')
+              },
+          });
+      })
       
     </script>
   

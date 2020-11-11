@@ -6,6 +6,7 @@ Defines HTTP Routes and associated logic for this app.
 import os
 import io
 import sys
+import glob
 import requests
 import py7zr
 
@@ -75,6 +76,18 @@ def process():
     print('--> "by_country.html"')
     make_table_country(df)
     print('Done.')
+
+    return 'success', 200
+
+@app.route("/clear")
+def clear():
+    print('Clearing Data Folder...')
+    try:
+        data_files = glob.glob(os.path.join(DATA_DIR, '*'))
+        for data_file in data_files:
+            os.remove(data_file)
+    except:
+        return 'error', 500
 
     return 'success', 200
 

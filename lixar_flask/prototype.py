@@ -3,6 +3,7 @@ import requests
 import io
 import py7zr
 import os, sys
+import glob
 import pandas as pd
 import numpy as np
 
@@ -11,6 +12,7 @@ URL = 'http://eforexcel.com/wp/wp-content/uploads/2017/07/1500000%20Sales%20Reco
 
 # CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # DATA_DIR = os.path.abspath(os.path.join(CURRENT_DIR, 'data'))
+
 ZIP_FILE_PATH = os.path.join('data', '1500000 Sales Records.7z')
 
 # print('DOWNLOADING .7z...')
@@ -72,3 +74,10 @@ with open(os.path.join(DATA_DIR, 'by_region.html'), 'r') as f:
 
 tables = [table_region, table_country]
 titles = ['na', 'By Region', 'By Country']
+
+
+
+data_files = glob.glob('data/*')
+
+for data_file in data_files:
+    os.remove(data_file)
