@@ -26,6 +26,14 @@ try:
 except FileNotFoundError:
     print('Download the file first!')
 
+
+df_world = pd.DataFrame(df[['Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']].sum()).T
+df_world[['Units Sold']] = df_world[['Units Sold']].applymap(lambda x: "{:,.0f}".format((x)))
+df_world[['Total Revenue', 'Total Cost', 'Total Profit']] = df_world[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))
+table_world = df_world.to_html(justify='center', index=False, classes=["table"], header=True)
+table_world = table_world.replace('<thead>', '<thead class="thead-dark">')
+print(table_world)
+
 print(df.head())
 
 print(df.columns.tolist())

@@ -68,6 +68,8 @@ def process():
         return 'error', 500
 
     print('Making Summary Files...')
+    print('--> "worldwide.html"')
+    make_table_world(df)
     print('--> "by_region.html"')
     make_table_region(df)
     print('--> "by_country.html"')
@@ -89,6 +91,11 @@ def load_tables():
         titles (list): titles for each table
     """
     error_message = '<p>Uh oh! This table is missing!</p><p>Please click "Download", then "Process", then "Refresh".</p>'
+    try:
+        with open(os.path.join(DATA_DIR, 'worldwide.html'), 'r') as f:
+            table_world = f.read()
+    except FileNotFoundError:
+        table_world = error_message
 
     try:
         with open(os.path.join(DATA_DIR, 'by_region.html'), 'r') as f:
@@ -102,8 +109,8 @@ def load_tables():
     except FileNotFoundError:
         table_country = error_message
        
-    tables = [table_region, table_country]
-    titles = ['na', 'By Region', 'By Country'] # 'na' is skipped but necessary
+    tables = [table_world, table_region, table_country]
+    titles = ['na', 'Worldwide', 'By Region', 'By Country'] # 'na' is skipped but necessary
 
     return tables, titles
 
@@ -159,6 +166,34 @@ def make_table_country(df_in):
     table = table.replace('<thead>', '<thead class="thead-dark">')
     
     with open(os.path.join(DATA_DIR, 'by_country.html'), 'w') as f:
+        f.write(table)
+
+    return
+
+
+def make_table_world(df_in):
+    """Calculates worldwide sums of sales data. Generates an HTML table and
+    saves to file.
+
+    Args:
+        df_in (dataframe): input sales data
+    """
+    df = pd.DataFrame(df_in[['Units Sold', 'Total Revenue', 'Total Cost', 'Total Profit']].sum()).T
+
+    if PEPPER_DATA:
+        # Pepper the data with random numbers to make it more obvious when the
+        # tables have been updated
+        df += np.random.rand(*df.shape) * 100000.0
+
+    # Format the table
+    df[['Units Sold']] = df[['Units Sold']].applymap(lambda x: "{:,.0f}".format((x)))
+    df[['Total Revenue', 'Total Cost', 'Total Profit']] = df[['Total Revenue', 'Total Cost', 'Total Profit']].applymap(lambda x: "${:,.0f}".format((x)))
+    
+    # Create HTML file
+    table = df.to_html(justify='center', index=False, classes=["table"], header=True)
+    table = table.replace('<thead>', '<thead class="thead-dark">')
+
+    with open(os.path.join(DATA_DIR, 'worldwide.html'), 'w') as f:
         f.write(table)
 
     return
