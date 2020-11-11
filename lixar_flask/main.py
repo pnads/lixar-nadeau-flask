@@ -82,7 +82,7 @@ def load_tables():
         tables (list): HTML tables as Strings
         titles (list): titles for each table
     """
-    error_message = '<p>Uh oh! This table is missing!</p><p>Please click "Process", then "Refresh".</p>'
+    error_message = '<p>Uh oh! This table is missing!</p><p>Please click "Download", then "Process", then "Refresh".</p>'
 
     try:
         with open(os.path.join(DATA_DIR, 'by_region.html'), 'r') as f:
