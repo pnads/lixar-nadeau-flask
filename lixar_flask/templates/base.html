@@ -29,24 +29,33 @@
     <script>
       //Download Nav Link
       $('#dl-btn').click(function () {
-          $.ajax({
-              type: "GET",
-              url: "/download",
-              beforeSend: function () {
-                $('#dl-btn').text('Downloading...')
-              },
-              error: function (response) {
-                $('#dl-btn').text('Download');
-                alert('ERROR: Download failed!');
-              },
-              success: function () {
-                $('#dl-btn').text('Complete!')
-              },
-          });
+        $("#pr-btn").attr("disabled", true);
+        $("#re-btn").attr("disabled", true);
+        $("#cl-btn").attr("disabled", true);
+        $.ajax({
+          type: "GET",
+          url: "/download",
+          beforeSend: function () {
+            $('#dl-btn').text('Downloading...')
+          },
+          error: function (response) {
+            $('#dl-btn').text('Download');
+            alert('ERROR: Download failed!');
+          },
+          success: function () {
+            $('#dl-btn').text('Complete!')
+            $("#pr-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#cl-btn").attr("disabled", false);
+          },
+        });
       })
 
       //Process Nav Link
       $('#pr-btn').click(function () {
+        $("#dl-btn").attr("disabled", true);
+        $("#re-btn").attr("disabled", true);
+        $("#cl-btn").attr("disabled", true);
           $.ajax({
               type: "GET",
               url: "/process",
@@ -59,6 +68,9 @@
               },
               success: function () {
                 $('#pr-btn').text('Complete!')
+                $("#dl-btn").attr("disabled", false);
+                $("#re-btn").attr("disabled", false);
+                $("#cl-btn").attr("disabled", false);
               },
           });
       })
@@ -70,6 +82,9 @@
 
       //Clear Nav Link
       $('#cl-btn').click(function () {
+        $("#dl-btn").attr("disabled", true);
+        $("#re-btn").attr("disabled", true);
+        $("#pr-btn").attr("disabled", true);
           $.ajax({
               type: "GET",
               url: "/clear",
@@ -82,6 +97,9 @@
               },
               success: function () {
                 $('#cl-btn').text('Complete!')
+                $("#dl-btn").attr("disabled", false);
+                $("#re-btn").attr("disabled", false);
+                $("#pr-btn").attr("disabled", false);
               },
           });
       })
