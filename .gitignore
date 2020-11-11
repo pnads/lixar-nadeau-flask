@@ -3,7 +3,7 @@
 *.csv
 *.code-workspace
 .vscode
-data/*.html
+lixar_flask/data/*.html
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
