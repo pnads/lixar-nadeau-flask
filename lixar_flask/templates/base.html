@@ -41,6 +41,9 @@
           error: function (response) {
             $('#dl-btn').text('Download');
             alert('ERROR: Download failed!');
+            $("#pr-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#cl-btn").attr("disabled", false);
           },
           success: function () {
             $('#dl-btn').text('Complete!')
@@ -53,26 +56,29 @@
 
       //Process Nav Link
       $('#pr-btn').click(function () {
-        $("#dl-btn").attr("disabled", true);
-        $("#re-btn").attr("disabled", true);
-        $("#cl-btn").attr("disabled", true);
-          $.ajax({
-              type: "GET",
-              url: "/process",
-              beforeSend: function () {
-                $('#pr-btn').text('Processing...')
-              },
-              error: function () {
-                $('#pr-btn').text('Process');
-                alert('ERROR: Processing failed! Missing data file! Re-try Download.');
-              },
-              success: function () {
-                $('#pr-btn').text('Complete!')
-                $("#dl-btn").attr("disabled", false);
-                $("#re-btn").attr("disabled", false);
-                $("#cl-btn").attr("disabled", false);
-              },
-          });
+      $("#dl-btn").attr("disabled", true);
+      $("#re-btn").attr("disabled", true);
+      $("#cl-btn").attr("disabled", true);
+        $.ajax({
+          type: "GET",
+          url: "/process",
+          beforeSend: function () {
+            $('#pr-btn').text('Processing...')
+          },
+          error: function () {
+            $('#pr-btn').text('Process');
+            alert('ERROR: Processing failed! Missing data file! Re-try Download.');
+            $("#dl-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#cl-btn").attr("disabled", false);
+          },
+          success: function () {
+            $('#pr-btn').text('Complete!')
+            $("#dl-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#cl-btn").attr("disabled", false);
+          },
+        });
       })
 
       //Refresh Nav Link
@@ -82,26 +88,32 @@
 
       //Clear Nav Link
       $('#cl-btn').click(function () {
-        $("#dl-btn").attr("disabled", true);
-        $("#re-btn").attr("disabled", true);
-        $("#pr-btn").attr("disabled", true);
-          $.ajax({
-              type: "GET",
-              url: "/clear",
-              beforeSend: function () {
-                $('#cl-btn').text('Clearing Data...')
-              },
-              error: function () {
-                $('#cl-btn').text('Clear');
-                alert('ERROR: Could not delete data files.');
-              },
-              success: function () {
-                $('#cl-btn').text('Complete!')
-                $("#dl-btn").attr("disabled", false);
-                $("#re-btn").attr("disabled", false);
-                $("#pr-btn").attr("disabled", false);
-              },
-          });
+      $("#dl-btn").attr("disabled", true);
+      $("#re-btn").attr("disabled", true);
+      $("#pr-btn").attr("disabled", true);
+        $.ajax({
+          type: "GET",
+          url: "/clear",
+          beforeSend: function () {
+            $('#cl-btn').text('Clearing Data...')
+          },
+          error: function () {
+            $('#cl-btn').text('Clear');
+            alert('ERROR: Could not delete data files.');
+            $("#dl-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#pr-btn").attr("disabled", false);
+          },
+          success: function () {
+            $('#cl-btn').text('Complete!')
+            $("#dl-btn").attr("disabled", false);
+            $("#re-btn").attr("disabled", false);
+            $("#pr-btn").attr("disabled", false);
+          },
+          complete: function() {
+            location.reload(true);
+          }
+        });
       })
       
     </script>
